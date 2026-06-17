@@ -1,0 +1,122 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone, ChevronRight } from "lucide-react";
+
+const navLinks = [
+  { href: "#hero", label: "Главная" },
+  { href: "#services", label: "Услуги" },
+  { href: "#catalog", label: "Каталог" },
+  { href: "#advantages", label: "Преимущества" },
+  { href: "#contact", label: "Контакты" },
+];
+
+export default function Navigation() {
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <>
+      <motion.header
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+          scrolled
+            ? "bg-black/90 backdrop-blur-xl shadow-lg shadow-red-900/10 border-b border-red-900/20"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 lg:h-20">
+            <a href="#hero" className="flex items-center gap-3 group">
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                <div className="absolute inset-0 bg-red-600 rounded-lg rotate-45 group-hover:rotate-[50deg] transition-transform duration-500" />
+                <span className="relative font-bold text-white text-sm">HE</span>
+              </div>
+              <div>
+                <span className="text-xl font-bold text-white tracking-wider">HAN<span className="text-red-500"> EXPORT</span></span>
+              </div>
+            </a>
+
+            <nav className="hidden lg:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  className="px-4 py-2 text-sm text-gray-300 hover:text-white transition-colors duration-300 relative group"
+                >
+                  {link.label}
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-0 h-[2px] bg-red-500 group-hover:w-3/4 transition-all duration-300" />
+                </a>
+              ))}
+            </nav>
+
+            <div className="hidden lg:flex items-center gap-4">
+              <a href="tel:+79001278047" className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-sm">
+                <Phone className="w-4 h-4 text-red-500" />
+                <span>+7 (900) 127-80-47</span>
+              </a>
+              <a
+                href="#contact"
+                className="bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-all duration-300 hover:shadow-lg hover:shadow-red-600/25 flex items-center gap-1"
+              >
+                Оставить заявку <ChevronRight className="w-4 h-4" />
+              </a>
+            </div>
+
+            <button
+              onClick={() => setMobileOpen(!mobileOpen)}
+              className="lg:hidden text-white p-2"
+              aria-label="Toggle menu"
+            >
+              {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+        </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+            className="fixed inset-0 z-40 bg-black/95 backdrop-blur-xl pt-20 lg:hidden"
+          >
+            <nav className="flex flex-col items-center gap-6 p-8">
+              {navLinks.map((link, i) => (
+                <motion.a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => setMobileOpen(false)}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="text-2xl font-semibold text-white hover:text-red-500 transition-colors"
+                >
+                  {link.label}
+                </motion.a>
+              ))}
+              <a
+                href="tel:+79001278047"
+                className="flex items-center gap-2 text-gray-300 mt-4"
+              >
+                <Phone className="w-5 h-5 text-red-500" />
+                +7 (900) 127-80-47
+              </a>
+            </nav>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
+  );
+}

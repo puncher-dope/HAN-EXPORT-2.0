@@ -1,0 +1,185 @@
+"use client";
+
+import { motion, useInView } from "framer-motion";
+import { useRef, useState } from "react";
+import { Send, Phone, Mail, MapPin, CheckCircle } from "lucide-react";
+
+export default function ContactSection() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  return (
+    <section id="contact" className="relative py-24 lg:py-32 bg-black overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-600/30 to-transparent" />
+
+      {/* Decorative */}
+      <div className="absolute -left-32 bottom-0 w-80 h-80 bg-red-600/5 rounded-full blur-3xl" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" ref={ref}>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <span className="text-red-500 text-sm font-semibold tracking-widest uppercase">
+            Контакты
+          </span>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mt-3">
+            Оставьте <span className="text-gradient">заявку</span>
+          </h2>
+          <p className="text-gray-400 mt-4 max-w-xl mx-auto text-lg">
+            Мы свяжемся с вами в течение 30 минут для обсуждения деталей
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-5 gap-10">
+          {/* Contact info */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.2 }}
+            className="lg:col-span-2 space-y-6"
+          >
+            {[
+              {
+                icon: Phone,
+                label: "Телефон",
+                value: "+7 (900) 127-80-47",
+                sublabel: "Бесплатно по России",
+              },
+              {
+                icon: Mail,
+                label: "Email",
+                value: "info@hanexport.ru",
+                sublabel: "Ответим за 30 минут",
+              },
+              {
+                icon: MapPin,
+                label: "Офис",
+                value: "Korea, ул. korean 57, оф. 301",
+                sublabel: "Пн-Пт: 9:00 — 19:00",
+              },
+            ].map((item) => (
+              <div
+                key={item.label}
+                className="flex items-start gap-4 p-4 rounded-xl border border-white/[0.06] bg-white/[0.02]"
+              >
+                <div className="w-10 h-10 rounded-lg bg-red-600/10 border border-red-600/20 flex items-center justify-center flex-shrink-0">
+                  <item.icon className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <div className="text-sm text-gray-500">{item.label}</div>
+                  <div className="text-white font-medium">{item.value}</div>
+                  <div className="text-xs text-gray-600 mt-0.5">{item.sublabel}</div>
+                </div>
+              </div>
+            ))}
+
+            <div className="p-5 rounded-xl border border-red-600/20 bg-red-600/[0.05]">
+              <div className="text-white font-semibold mb-2">Бесплатная консультация</div>
+              <p className="text-gray-400 text-sm leading-relaxed">
+                Оставьте заявку и наш менеджер поможет подобрать оптимальный
+                вариант автомобиля под ваш бюджет и пожелания.
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Form */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            transition={{ duration: 0.6, delay: 0.3 }}
+            className="lg:col-span-3"
+          >
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="h-full flex flex-col items-center justify-center p-10 rounded-2xl border border-red-600/30 bg-red-600/[0.05]"
+              >
+                <CheckCircle className="w-16 h-16 text-red-500 mb-4" />
+                <h3 className="text-2xl font-bold text-white mb-2">Заявка отправлена!</h3>
+                <p className="text-gray-400 text-center">
+                  Мы свяжемся с вами в ближайшее время
+                </p>
+              </motion.div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="p-6 lg:p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] space-y-5"
+              >
+                <div className="grid sm:grid-cols-2 gap-5">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1.5">Имя</label>
+                    <input
+                      required
+                      type="text"
+                      placeholder="Ваше имя"
+                      className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/30 transition-all"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1.5">Телефон</label>
+                    <input
+                      required
+                      type="tel"
+                      placeholder="+7 (___) ___-__-__"
+                      className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/30 transition-all"
+                    />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1.5">Марка и модель</label>
+                  <input
+                    type="text"
+                    placeholder="Например: Hyundai Sonata 2024"
+                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/30 transition-all"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1.5">Бюджет</label>
+                  <select className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-gray-400 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/30 transition-all appearance-none">
+                    <option value="">Выберите бюджет</option>
+                    <option value="1-2m">1 — 2 млн ₽</option>
+                    <option value="2-3m">2 — 3 млн ₽</option>
+                    <option value="3-5m">3 — 5 млн ₽</option>
+                    <option value="5m+">Более 5 млн ₽</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1.5">Комментарий</label>
+                  <textarea
+                    rows={3}
+                    placeholder="Дополнительные пожелания..."
+                    className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-3 text-white placeholder-gray-600 focus:outline-none focus:border-red-600/50 focus:ring-1 focus:ring-red-600/30 transition-all resize-none"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3.5 rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:shadow-red-600/25 flex items-center justify-center gap-2"
+                >
+                  Отправить заявку <Send className="w-4 h-4" />
+                </button>
+
+                <p className="text-xs text-gray-600 text-center">
+                  Нажимая кнопку, вы соглашаетесь с политикой обработки персональных данных
+                </p>
+              </form>
+            )}
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  );
+}
