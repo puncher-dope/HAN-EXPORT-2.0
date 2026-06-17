@@ -8,22 +8,37 @@ export const metadata: Metadata = {
   title: 'HAN EXPORT — Экспорт автомобилей из Кореи в Россию',
   description: 'Прямой экспорт автомобилей из Южной Кореи в Россию. Надежная доставка, прозрачные цены, полный сервис оформления.',
   keywords: 'экспорт автомобилей, импорт машин из Кореи, автомобили из Кореи в Россию, корейские авто, HAN EXPORT',
-  authors: [{ name: 'HAN EXPORT' }],
+  authors: [{ name: 'HAN EXPORT', url: 'https://han-export.ru' }],
   viewport: 'width=device-width, initial-scale=1.0, maximum-scale=5.0',
   robots: 'index, follow',
+  alternates: {
+    canonical: 'https://han-export.ru',
+  },
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/favicon.ico',
+    apple: '/apple-touch-icon.png',
+  },
   openGraph: {
     title: 'HAN EXPORT — Экспорт автомобилей из Кореи в Россию',
     description: 'Прямой экспорт автомобилей из Южной Кореи в Россию. Надежная доставка, прозрачные цены.',
     type: 'website',
     locale: 'ru_RU',
+    url: 'https://han-export.ru',
+    images: [
+      {
+        url: 'https://han-export.ru/og-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'HAN EXPORT — Экспорт автомобилей из Кореи',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'HAN EXPORT — Экспорт автомобилей из Кореи в Россию',
     description: 'Прямой экспорт автомобилей из Южной Кореи в Россию',
-  },
-  alternates: {
-    canonical: 'https://han-export.ru',
+    images: ['https://han-export.ru/og-image.jpg'],
   },
 };
 
