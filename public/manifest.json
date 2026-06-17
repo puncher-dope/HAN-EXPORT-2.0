@@ -1,0 +1,13 @@
+{
+  "name": "HAN EXPORT — Экспорт автомобилей из Кореи в Россию",
+  "short_name": "HAN EXPORT",
+  "description": "Прямой экспорт автомобилей из Южной Кореи в Россию",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#000000",
+  "background_color": "#ffffff",
+  "icons": [],
+  "screenshots": []
+}
